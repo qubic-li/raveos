@@ -14,7 +14,7 @@ Qubminer are now successfully integrated into RaveOS.
 - [Qubic Mining Pool](https://app.qubic.li/public/)
 - [Official Qubic Client](https://github.com/qubic-li/client?tab=readme-ov-file#download)
 
-## :warning: HiveOs Mandatory Installation Instructions
+## :warning: RaveOs Mandatory Installation Instructions
 - The CPU where you run the Client must support AVX2 or AVX512 CPU instructions
 `cat /proc/cpuinfo | grep avx2`(check if `avx2` is in the result)
 - Cuda 12+ drivers (535+)
