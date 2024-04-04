@@ -1,0 +1,12 @@
+{
+  "package":"qubminer-1.9.0",
+  "name": "qubminer",
+  "version": "1.9.0",
+  "description": "Qubminer 1.9.0",
+  "maintainer":"Worm (dangeroot@gmail.com)",
+  "platforms": ["nvidia"],
+  "dual_coin": false,
+  "algo": ["qubic"],
+  "executable": ["qli-Client"],
+  "rev": 1
+}
