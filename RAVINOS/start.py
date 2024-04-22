@@ -22,33 +22,34 @@ def process_user_config(custom_user_config, settings):
             param_high = param.upper()
             modified_param = param_high
             modified_param = modified_param.replace('PAYOUTID', 'payoutId')
-            modified_param = modified_param.replace('AMOUNTOFTHREADS', 'amountOfThreads')
             modified_param = modified_param.replace('ACCESSTOKEN', 'accessToken')
-            modified_param = modified_param.replace('ALLOWHWINFOCOLLECT', 'allowHwInfoCollect')
             modified_param = modified_param.replace('HUGEPAGES', 'hugePages')
-            modified_param = modified_param.replace('CPUONLY', 'cpuOnly')
             modified_param = modified_param.replace('ALIAS', 'alias')
-            modified_param = modified_param.replace('OVERWRITES', 'overwrites')
+            modified_param = modified_param.replace('TRAINER', 'trainer')
             if param != modified_param:
                 param = modified_param
             if value:
-                if param == 'overwrites':
-                    value = value.replace("{", "").replace("}", "")
+                if param == 'trainer':
+                    value = value.replace("{", "").replace("}", "").replace(" ", "")
                     pairs = value.split(',')
 
-                    if 'overwrites' in settings:
-                        overwrites_data = settings['overwrites']
+                    if 'trainer' in settings:
+                        trainer_data = settings['trainer']
                     else:
-                        overwrites_data = {}
+                        trainer_data = {}
 
                     for pair in pairs:
                         param_2, value_2 = pair.split(':')
                         if value_2 == 'false':
-                            overwrites_data[param_2] = False
+                            trainer_data[param_2] = False
+                        elif value_2 == 'true':
+                            trainer_data[param_2] = True
+                        elif re.match(r'^[0-9]+(\.[0-9]+)?$', value_2):
+                            trainer_data[param_2] = int(value_2)
                         else:
-                            overwrites_data[param_2] = value_2
+                            trainer_data[param_2] = value_2
 
-                    settings['overwrites'] = overwrites_data
+                    settings['trainer'] = trainer_data
                 else:
                     if value == 'null':
                         settings[param] = None
@@ -122,25 +123,22 @@ if match:
 hugePages = global_settings.get('hugePages')
 
 # Additional check in the Settings for only CPU mining
-if global_settings.get('cpuOnly') != 'yes':
+if global_settings.get('trainer', {}).get('gpu'):
     settings_gpu = global_settings.copy()
     settings_gpu['alias'] += '-gpu'
-    settings_gpu['amountOfThreads'] = 0
     settings_gpu.pop('hugePages', None)
+    settings_gpu.setdefault('trainer', {}).update({'cpu': False})
+    settings_gpu.setdefault('trainer', {}).update({'gpu': True})
     with open("{}/gpu/appsettings.json".format(miner_dir), 'w') as f:
         json.dump({'Settings': settings_gpu}, f)
 
 # Additional check and modification in the Settings for CPU mining
-if global_settings.get('cpuOnly') == 'yes' or global_settings.get('amountOfThreads') != 0:
+if global_settings.get('trainer', {}).get('cpuThreads') and global_settings.get('trainer', {}).get('cpuThreads') != 0:
     settings_cpu = global_settings.copy()
     settings_cpu['alias'] += '-cpu'
-    settings_cpu['allowHwInfoCollect'] = False
-    settings_cpu.pop('cpuOnly', None)
     settings_cpu.pop('hugePages', None)
-    if 'overwrites' in settings_cpu:
-        overwrites = settings_cpu['overwrites']
-        if 'CUDA' in overwrites:
-            overwrites.pop('CUDA', None)
+    settings_cpu.setdefault('trainer', {}).update({'cpu': True})
+    settings_cpu.setdefault('trainer', {}).update({'gpu': False})
     with open("{}/cpu/appsettings.json".format(miner_dir), 'w') as f:
         json.dump({'Settings': settings_cpu}, f)
 
