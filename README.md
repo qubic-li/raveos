@@ -144,3 +144,15 @@ Please use "Tunning Settings" from workers's dashboard to set global or specific
 > >e.g.: `0,-1,-1,-1,-1,-1` => GPU#1 disabled, #1-5 auto tuen<br>
 > e.g.: `0` => GPU#0 disabled, if there are more, all will be auto tuned<br>
 > e.g.: `512,256,256,256,256,512` => set `gThread` to 512 on GPU#0 and GPU#5, 256 to the rest<br>
+
+#### QLI Trainer Options
+The following table shows the available trainers.
+
+|  Type 	|   Version Key (`gpuVersion`/`cpuVersion`)	|   Description	|  
+|---	|---	|--- |
+|   GPU	|  `CUDA12`  	|   CUDA Version for all newer/bigger GPU's (>4090) |
+|   GPU	|  `AMD`  	|   General AMD Version |
+|   CPU	|  `GENERIC`  	|   Generic x64 CPU trainer (no specific instructions needed) |
+|   CPU	|  `AVX2`  	|   AVX2 x64 CPU trainer (AVX2 instructions needed) |
+|   CPU	|  `AVX512`  	|   AVX512 x64 CPU trainer (AVX512 instructions needed) |
+|   CPU	|  `SKYLAKE`  	|   For specific Intel Lake processors (may not be available all the time) |
