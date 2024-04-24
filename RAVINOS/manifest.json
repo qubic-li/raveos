@@ -11,5 +11,5 @@
   "dual_coin": false,
   "algo": ["qubic"],
   "executable": ["qli-Client"],
-  "rev": 9
+  "rev": 12
 }
