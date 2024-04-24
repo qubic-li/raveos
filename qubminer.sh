@@ -16,7 +16,7 @@ hugePages="$4"
 hugePagesCommand=""
 
 # Check if hugePages is not empty and contains only digits, if yes, assign sysctl command to hugePagesCommand
-if [[ -n $hugePages && $hugePages =~ ^[0-9]+$ ]]; then
+if [[ -n $hugePages && $hugePages != "None" && $hugePages =~ ^[0-9]+$ ]]; then
   hugePagesCommand="sysctl -w vm.nr_hugepages=$hugePages && "
 fi
 
