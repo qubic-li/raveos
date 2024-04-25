@@ -1,8 +1,8 @@
 {
-  "package":"qubminer-1.9.5",
+  "package":"qubminer-1.9.6",
   "name": "qubminer",
-  "version": "1.9.5",
-  "description": "Qubminer 1.9.5",
+  "version": "1.9.6",
+  "description": "Qubminer 1.9.6",
   "maintainer":"Worm (dangeroot@gmail.com)",
   "platforms": [
     "amd",
@@ -11,5 +11,5 @@
   "dual_coin": false,
   "algo": ["qubic"],
   "executable": ["qli-Client"],
-  "rev": 12
+  "rev": 1
 }
